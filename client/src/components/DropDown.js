@@ -7,6 +7,9 @@ export default function Dropdown() {
             <Link className="dropDownLink" to="/" exact="true">
             Home
             </Link>
+            <Link className="dropDownLink" to="/appointments" exact="true">
+            Appointments
+            </Link>
             <Link className="dropDownLink" to="/signup" exact="true">
             Sign-up/Login
             </Link>

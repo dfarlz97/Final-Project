@@ -12,7 +12,7 @@ export default function Navbar() {
     <>
       <header className="navbar">
 
-        <h1 id="title">Farley Child Pyschology</h1>
+        <h1 id="title">Skylark Neuropsychology</h1>
         <button className = "Dropdown-Button" onClick={toggleDropDown} id="dropdown-button">
           {<RxIcons.RxHamburgerMenu />}
         </button>

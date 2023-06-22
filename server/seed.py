@@ -1,7 +1,7 @@
 from flask import Flask
 from faker import Faker
 from datetime import datetime
-from app import app, db, Patient, Appointment, Doctor, Comment
+from app import app, db, Patient, Appointment, Doctor
 
 fake = Faker()
 
@@ -21,17 +21,14 @@ with app.app_context():
         db.session.add(patient)
         db.session.commit()
 
-        comment_text = fake.paragraph()
-        comment = Comment(text=comment_text, doctor=doctor, patient=patient)
-        db.session.add(comment)
-        db.session.commit()
-
         for j in range(3):
             day = fake.date_between(start_date='today', end_date='+30d')
-            day_str = day.strftime('%Y-%m-%d')  # Convert date to string
+            day_str = day.strftime('%Y-%m-%d')
             appointment_time = fake.time(pattern='%H:%M')
             appointment_datetime = datetime.strptime(f"{day_str} {appointment_time}", '%Y-%m-%d %H:%M')
 
-            appointment = Appointment(patient=patient, doctor=doctor, day=appointment_datetime.date(), time=appointment_datetime.time())
+            details = fake.paragraph()
+
+            appointment = Appointment(patient=patient, doctor=doctor, day=appointment_datetime.date(), time=appointment_datetime.time(), details=details)
             db.session.add(appointment)
             db.session.commit()

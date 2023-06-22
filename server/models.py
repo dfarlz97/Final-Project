@@ -11,7 +11,6 @@ class Doctor(db.Model, SerializerMixin):
     email = db.Column(db.String)
     password = db.Column(db.String)
     patients = db.relationship('Patient', backref='doctor', foreign_keys='Patient.doctor_id')
-    comments = db.relationship('Comment', backref='doctor', foreign_keys='Comment.doctor_id')
 
 class Patient(db.Model, SerializerMixin):
     __tablename__ = 'patients'
@@ -23,15 +22,6 @@ class Patient(db.Model, SerializerMixin):
     email = db.Column(db.String)
     password = db.Column(db.String)
     doctor_id = db.Column(db.Integer, db.ForeignKey('doctors.id'))
-    comments = db.relationship('Comment', backref='patient', lazy=True)
-
-class Comment(db.Model, SerializerMixin):
-    __tablename__ = 'comments'
-
-    id = db.Column(db.Integer, primary_key=True)
-    text = db.Column(db.String)
-    doctor_id = db.Column(db.Integer, db.ForeignKey('doctors.id'))
-    patient_id = db.Column(db.Integer, db.ForeignKey('patients.id'))
 
 class Appointment(db.Model):
     __tablename__ = 'appointments'
@@ -41,6 +31,7 @@ class Appointment(db.Model):
     doctor_id = db.Column(db.Integer, db.ForeignKey('doctors.id'))
     day = db.Column(db.Date)
     time = db.Column(db.Time)
+    details = db.Column(db.String)  # New column for comments/details
 
     patient = db.relationship('Patient', backref='appointments', lazy=True)
     doctor = db.relationship('Doctor', backref='appointments', lazy=True)
@@ -49,7 +40,11 @@ class Appointment(db.Model):
         return {
             'id': self.id,
             'patient_id': self.patient_id,
+            'patient_name': self.patient.name,  # Include patient name
             'doctor_id': self.doctor_id,
+            'doctor_name': self.doctor.name,  # Include doctor name
             'day': self.day.strftime('%Y-%m-%d'),
-            'time': self.time.strftime('%H:%M')
+            'time': self.time.strftime('%H:%M'),
+            'details': self.details
         }
+

@@ -6,6 +6,7 @@ import Login from "./Login.js";
 import Signup from "./Signup.js";
 import LoginModal from "./LoginModal.js";
 import Appointment from "./Appointments/AppointmentCard.js";
+import BlogPage from "./BlogPage.js";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="/signup" exact="true" element={<Signup />} />
         <Route path="/login" exact="true" element={<Login />} />
         <Route path="/appointments" exact="true" element={<Appointment />} />
+        <Route path="/blog" element={<Blog />} />
       </Routes>
     </div>
   );

@@ -13,6 +13,9 @@ export default function Dropdown() {
             <Link className="dropDownLink" to="/signup" exact="true">
             Sign-up/Login
             </Link>
+            <Link to="/blog">
+              Blog
+            </Link>
       </nav>
       );
     }

@@ -11,6 +11,7 @@ class Doctor(db.Model, SerializerMixin):
     email = db.Column(db.String)
     password = db.Column(db.String)
     patients = db.relationship('Patient', backref='doctor', foreign_keys='Patient.doctor_id')
+    posts = db.relationship('BlogPost', backref='author_doctor', lazy=True, foreign_keys='BlogPost.doctor_id')
 
 class Patient(db.Model, SerializerMixin):
     __tablename__ = 'patients'
@@ -47,4 +48,15 @@ class Appointment(db.Model):
             'time': self.time.strftime('%H:%M'),
             'details': self.details
         }
+
+class BlogPost(db.Model):
+    __tablename__ = 'blog_posts'
+
+    id = db.Column(db.Integer, primary_key=True)
+    author = db.Column(db.String, db.ForeignKey('doctors.name'))
+    title = db.Column(db.String)
+    content = db.Column(db.String)
+
+    doctor_id = db.Column(db.Integer, db.ForeignKey('doctors.id'))
+    doctor = db.relationship('Doctor', backref='blog_posts', lazy=True, foreign_keys='BlogPost.doctor_id')
 
